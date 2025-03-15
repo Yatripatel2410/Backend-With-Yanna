@@ -1,7 +1,7 @@
 // asyncHandler.js file method bana ke usko export ke liye banani hoti hai
 
 const asyncHandler = (requestHandler) => {
-    (req, res, next) => {
+    return (req, res, next) => {
         Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err))
     }
 }  // (or) try-catch se bhi kar sakte hai
