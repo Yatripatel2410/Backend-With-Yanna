@@ -4,7 +4,7 @@ class ApiError extends Error{
         message = "Something Went Wrong",
         errors = [],
         stack = ""
-    ){
+    ){   // overrid kiya
         super(message)
         this.statusCode = statusCode
         this.data = null

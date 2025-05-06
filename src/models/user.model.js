@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-import jwt from "jsonwebtoken"  // creating data without optional encryption  // beared token hai means jo usko beer karta hai usko sahi maan leta hai
+import jwt from "jsonwebtoken"  //create token ,,, creating data without optional encryption  // beared token hai means jo usko beer karta hai usko sahi maan leta hai
 import bcrypt from "bcrypt"     // help for hash password
 
 
@@ -48,22 +48,25 @@ const userSchema = new Schema(
             type: String,
         }
     },
+    // timestamps: true se createdAt , updatedAt mil hi jayega 
     {
         timestamps: true
     }
 )
 
+// Pre middleware function are execute one after another, when each middleware calls next.
 userSchema.pre("save", async function (next) {
-    if(!this.isModified("password")) return next();
+    if(!this.isModified("password")) return next();    // if modify hai to hi firse save karo otherwise go to next
 
     this.password = await bcrypt.hash(this.password, 10)   // here hash roung = 10
     next()
-})  // pre("save", callback) here in callback we can not use () => {} bcz issme this function ka reference nhi hota context nhi pata hota and yahan pe context pata hona bahot jaruri hota hai
+})  // pre("save", callback) here in callback we can not use () => {} bcz issme this function ka reference nhi hota bcz context nhi pata hota and yahan pe context pata hona bahot jaruri hota hai
 
 userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
 
+//  sign method token generate karega
 userSchema.methods.generateAccessToken = function(){
     return jwt.sign(
         {
@@ -78,6 +81,8 @@ userSchema.methods.generateAccessToken = function(){
         }
     )
 }
+
+// refresh tokem me kaam information hoti hai bcz wo baar baar refresh hota rehta hai
 userSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {

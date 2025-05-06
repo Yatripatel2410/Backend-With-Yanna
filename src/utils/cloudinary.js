@@ -1,6 +1,6 @@
 import {v2 as cloudinary} from "cloudinary";
 import { error, log } from "console";
-import fs from "fs"    // file system operations
+import fs from "fs"    // file system operations like rad,write,sync async me, open directort
 
 // Configuration
 cloudinary.config({ 

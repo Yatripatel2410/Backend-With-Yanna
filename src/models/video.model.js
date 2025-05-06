@@ -1,10 +1,11 @@
 import mongoose, {Schema} from "mongoose";
+// Aggregation query's likhne ke liye use karte hai  for download write in terminal:-( npm i mongoose-aggregate-paginate-v2)
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const videoSchema = new Schema(
     {
         videoFile: {
-            type: String,   // cloudinary url
+            type: String,   // cloudinary url se le lenge
             required: true
         },
         thumbnail: {
@@ -40,6 +41,7 @@ const videoSchema = new Schema(
         timestamps: true
     }
 )
+
 
 videoSchema.plugin(mongooseAggregatePaginate)
 
